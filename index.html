@@ -1,1 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine</title>
 
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  h1 {
+    color: #ff4d6d;
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    margin-top: 0;
+    color: #333;
+    font-weight: normal;
+  }
+
+  .btn-area {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #yesBtn {
+    background: #28a745;
+    color: white;
+  }
+
+  #noBtn {
+    background: #dc3545;
+    color: white;
+    position: relative;
+    z-index: 2;
+  }
+
+  #popup {
+    position: fixed;
+    background: black;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: none;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 999;
+  }
+
+  #successMsg {
+    position: fixed;
+    bottom: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>SAM 💙</h1>
+  <h2>Will you be my Valentine?</h2>
+
+  <div class="btn-area">
+    <button id="yesBtn">Yes 😍</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+</div>
+
+<div id="popup"></div>
+<div id="successMsg">I knew you'd say YES,Love you soo much sam 💙</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const popup = document.getElementById("popup");
+const successMsg = document.getElementById("successMsg");
+const yesBtn = document.getElementById("yesBtn");
+
+let hoverCount = 0;
+
+// messages for first and second attempt
+const messages = [
+  "Are you sure? 😏",
+  "Think again... I won't accept NO 😌"
+];
+
+// move NO button
+function moveNoButton() {
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
+
+  const maxX = window.innerWidth - btnWidth - 20;
+  const maxY = window.innerHeight - btnHeight - 20;
+
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+
+  // show popup with message
+  if (hoverCount === 1) popup.innerText = messages[0];
+  else if (hoverCount === 2) popup.innerText = messages[1];
+  else popup.innerText = "ohhh ohhh 😏";
+
+  popup.style.display = "block";
+  popup.style.left = randomX + "px";
+  popup.style.top = (randomY - 45) + "px";
+}
+
+// detect mouse near NO
+document.addEventListener("mousemove", (e) => {
+  const rect = noBtn.getBoundingClientRect();
+
+  const distanceX = Math.abs(e.clientX - (rect.left + rect.width/2));
+  const distanceY = Math.abs(e.clientY - (rect.top + rect.height/2));
+
+  if (distanceX < 120 && distanceY < 120) {
+    hoverCount++;
+    moveNoButton();
+  }
+});
+
+// mobile support
+noBtn.addEventListener("touchstart", () => {
+  hoverCount++;
+  moveNoButton();
+});
+
+// YES click
+yesBtn.addEventListener("click", () => {
+  successMsg.style.display = "block";
+});
+</script>
+
+</body>
+</html>
