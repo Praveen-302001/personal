@@ -1,0 +1,12 @@
+Tailscale is a VPN-based networking tool that creates a secure private network between your devices.
+
+On the first machine, you sign in to Tailscale using a Google account.
+On the second machine, you log in using the same Google account.
+
+Since both machines are authenticated under the same account, they become part of the same tailnet.
+
+A tailnet is the private network created by Tailscale. It is not just a network interface, but a secure overlay network managed by Tailscale.
+
+After logging in, both machines will appear in the Tailscale admin dashboard. Each device is automatically assigned a private IP address (usually in the range 100.x.x.x).
+
+Using this private IP address, you can securely connect from one machine to another (for example, using RDP, SSH, etc.).
